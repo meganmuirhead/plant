@@ -53,6 +53,7 @@ class Plant extends EventEmitter {
     errorListener(err) {
         console.log(`An error has occured: ${err.message}`)
     }
+
 }
 
 let myPlant = new Plant();
@@ -73,8 +74,6 @@ myPlant.emit('bugAttack');
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
-// var util = require('util');
-
 process.stdin.on('data', function (text) {
 
     if (text === 'quit') {
@@ -91,17 +90,44 @@ process.stdin.on('data', function (text) {
 
 });
 
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+
+process.stdin.on('data', function (text) {
+
+    if (text === 'quit\n') {
+        done();
+    }else if(text === 'plantSeed\n'){
+        plantSeed();
+    }else if(text === 'water\n'){
+        water();
+    }else if (text === 'bugAttack\n'){
+        bugAttack();
+    }else if(text === 'harvest\n'){
+        harvest();
+    }
+
+});
+
 function water(){
     myPlant.emit('water');
+    console.log('You just water this little cutie pie');
+
 }
 function plantSeed(){
     myPlant.emit('plantSeed');
+    console.log('You just planted your seed! Yay!bug');
+
 }
 function bugAttack(){
     myPlant.emit('bugAttack');
+    console.log('Your little plant guy just got attacked by bugs! Oh no!');
+
 }
 function harvest(){
     myPlant.emit('harvest');
+    console.log('You just harvested your plant. He gone, he dead.');
+
 }
 
 function done() {
